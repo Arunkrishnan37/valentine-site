@@ -1,3 +1,16 @@
+Here’s the full updated index.html with all your requested tweaks:
+
+“No” changes to funny/cute text each click.
+
+Tagline under the buttons changes each time “No” is clicked.
+
+When “Yes” gets huge, the tagline stays clearly below it.
+
+After 4 “No” clicks, “Yes” fills the page and only the question + big Yes + final tagline remain.
+
+Final screen still shows the teddy bears hugging.
+
+xml
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,9 +146,13 @@
     }
 
     .tagline {
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
       color: #8a3b5b;
+      text-align: center;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .final {
@@ -211,10 +228,12 @@
   <div class="container" id="mainBox">
     <div class="question-stage" id="questionStage">
       <h1 id="questionText">Will you be my Valentine? 💖</h1>
+
       <div class="buttons">
         <button id="yesBtn">Yes</button>
         <button id="noBtn">No</button>
       </div>
+
       <p class="tagline" id="tagline">Think carefully... there are no take-backs 🫶</p>
     </div>
 
@@ -248,6 +267,14 @@
       "You can’t escape this love 💘"
     ];
 
+    const cuteTaglines = [
+      "See… saying yes looks so much cuter 💌",
+      "I made this just for you, you know 🥺",
+      "Rejecting me is illegal in 47 countries 💘",
+      "Your heart is definitely saying yes rn 💗",
+      "Fine, but we both know you're melting 🧸"
+    ];
+
     let noClickCount = 0;
     let yesScale = 1;
 
@@ -273,13 +300,19 @@
     noBtn.addEventListener("click", () => {
       noClickCount++;
 
+      // Change No button text
       const textIndex = Math.min(noClickCount, noTexts.length - 1);
       noBtn.textContent = noTexts[textIndex];
 
+      // Grow Yes button
       yesScale += 0.25;
       yesBtn.style.transform = `scale(${yesScale})`;
-      tagline.textContent = "See… saying yes looks so much cuter 💌";
 
+      // Change tagline to something cute
+      const taglineIndex = (noClickCount - 1) % cuteTaglines.length;
+      tagline.textContent = cuteTaglines[taglineIndex];
+
+      // After 4 No clicks → full screen Yes, hide No
       if (noClickCount >= 4) {
         mainBox.classList.add("full-yes");
         noBtn.style.display = "none";
