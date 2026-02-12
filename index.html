@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will you be my Valentine?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Comic Sans MS", "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffe6f2 0, #ffb6d9 40%, #ff9ac2 70%, #ff7aa8 100%);
+      color: #4b1a2a;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(255, 105, 180, 0.35);
+      max-width: 480px;
+      width: 90%;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #ff5c93;
+      transform: rotate(45deg);
+      animation: float 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #ff5c93;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -9px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -9px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-120vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.75rem 1.7rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    #yesBtn {
+      background: linear-gradient(135deg, #ff6fb5, #ff3e9d);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(255, 63, 140, 0.4);
+      transform-origin: center;
+    }
+
+    #yesBtn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 30px rgba(255, 63, 140, 0.5);
+    }
+
+    #noBtn {
+      background: #ffe5f2;
+      color: #b03060;
+      border: 2px dashed #ff87b9;
+    }
+
+    #noBtn:hover {
+      transform: translateY(-2px);
+      background: #ffd2ea;
+    }
+
+    .tagline {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #8a3b5b;
+    }
+
+    .final {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .final h1 {
+      font-size: 2rem;
+    }
+
+    .gif-container {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ffe6f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 30px rgba(255, 63, 140, 0.35);
+    }
+
+    .gif-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .final-note {
+      font-size: 1rem;
+      color: #8a3b5b;
+    }
+
+    /* Fullscreen YES stage */
+    .full-yes {
+      max-width: none;
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .full-yes .buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .full-yes #yesBtn {
+      font-size: 1.4rem;
+      padding: 1rem 3rem;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.7rem;
+      }
+      .container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <div class="container" id="mainBox">
+    <div class="question-stage" id="questionStage">
+      <h1 id="questionText">Will you be my Valentine? 💖</h1>
+      <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+      </div>
+      <p class="tagline" id="tagline">Think carefully... there are no take-backs 🫶</p>
+    </div>
+
+    <div class="final" id="finalStage">
+      <h1>Obviously duh, you are stuck with me 💘</h1>
+      <div class="gif-container">
+        <!-- Cute teddy bears hugging GIF -->
+        <img
+          src="https://media.tenor.com/2roX3uxz_68AAAAM/cute-bear.gif"
+          alt="Two cute bears hugging"
+        />
+      </div>
+      <p class="final-note">Too late to run away now. We’re officially adorable. 🧸💞</p>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const mainBox = document.getElementById("mainBox");
+    const questionStage = document.getElementById("questionStage");
+    const finalStage = document.getElementById("finalStage");
+    const tagline = document.getElementById("tagline");
+    const heartsContainer = document.getElementById("hearts");
+
+    const noTexts = [
+      "No 😳",
+      "Are you sure? 🥺",
+      "Think again… 👀",
+      "Last chance!! 😤",
+      "You can’t escape this love 💘"
+    ];
+
+    let noClickCount = 0;
+    let yesScale = 1;
+
+    // floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      const size = 12 + Math.random() * 16;
+      heart.style.width = size + "px";
+      heart.style.height = size + "px";
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.bottom = "-40px";
+      heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    setInterval(createHeart, 500);
+
+    noBtn.addEventListener("click", () => {
+      noClickCount++;
+
+      const textIndex = Math.min(noClickCount, noTexts.length - 1);
+      noBtn.textContent = noTexts[textIndex];
+
+      yesScale += 0.25;
+      yesBtn.style.transform = `scale(${yesScale})`;
+      tagline.textContent = "See… saying yes looks so much cuter 💌";
+
+      if (noClickCount >= 4) {
+        mainBox.classList.add("full-yes");
+        noBtn.style.display = "none";
+        tagline.textContent = "The universe clearly wants you to click yes ✨";
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      questionStage.style.display = "none";
+      finalStage.style.display = "flex";
+      mainBox.classList.add("full-yes");
+    });
+  </script>
+</body>
+</html>
