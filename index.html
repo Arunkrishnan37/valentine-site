@@ -98,6 +98,7 @@
       gap: 1rem;
       margin-top: 1rem;
       flex-wrap: wrap;
+      z-index: 1;
     }
 
     button {
@@ -140,6 +141,7 @@
       max-width: 90%;
       margin-left: auto;
       margin-right: auto;
+      z-index: 1;
     }
 
     .final {
@@ -199,6 +201,10 @@
       padding: 1rem 3rem;
     }
 
+    .full-yes .tagline {
+      margin-top: 1rem;
+    }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 1.7rem;
@@ -227,7 +233,6 @@
     <div class="final" id="finalStage">
       <h1>Obviously duh, you are stuck with me 💘</h1>
       <div class="gif-container">
-        <!-- Cute teddy bears hugging GIF -->
         <img
           src="https://media.tenor.com/2roX3uxz_68AAAAM/cute-bear.gif"
           alt="Two cute bears hugging"
@@ -265,7 +270,6 @@
     let noClickCount = 0;
     let yesScale = 1;
 
-    // floating hearts
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -287,19 +291,15 @@
     noBtn.addEventListener("click", () => {
       noClickCount++;
 
-      // Change No button text
       const textIndex = Math.min(noClickCount, noTexts.length - 1);
       noBtn.textContent = noTexts[textIndex];
 
-      // Grow Yes button
       yesScale += 0.25;
       yesBtn.style.transform = `scale(${yesScale})`;
 
-      // Change tagline to something cute
       const taglineIndex = (noClickCount - 1) % cuteTaglines.length;
       tagline.textContent = cuteTaglines[taglineIndex];
 
-      // After 4 No clicks → full screen Yes, hide No
       if (noClickCount >= 4) {
         mainBox.classList.add("full-yes");
         noBtn.style.display = "none";
