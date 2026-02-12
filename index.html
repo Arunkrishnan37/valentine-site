@@ -97,6 +97,7 @@
       justify-content: center;
       gap: 1rem;
       margin-top: 1rem;
+      margin-bottom: 1.5rem;
       flex-wrap: wrap;
       z-index: 1;
     }
@@ -115,6 +116,7 @@
       color: #fff;
       box-shadow: 0 10px 20px rgba(255, 63, 140, 0.4);
       transform-origin: center;
+      z-index: 1;
     }
 
     #yesBtn:hover {
@@ -134,14 +136,16 @@
     }
 
     .tagline {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
       color: #8a3b5b;
       text-align: center;
       max-width: 90%;
       margin-left: auto;
       margin-right: auto;
       z-index: 1;
+      line-height: 1.4;
     }
 
     .final {
@@ -188,7 +192,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 2rem;
+      gap: 3rem;
     }
 
     .full-yes .buttons {
@@ -197,12 +201,13 @@
     }
 
     .full-yes #yesBtn {
-      font-size: 1.4rem;
-      padding: 1rem 3rem;
+      font-size: 1.5rem;
+      padding: 1.1rem 3.4rem;
     }
 
     .full-yes .tagline {
-      margin-top: 1rem;
+      font-size: 1.2rem;
+      margin-bottom: 1.8rem;
     }
 
     @media (max-width: 480px) {
@@ -211,6 +216,9 @@
       }
       .container {
         padding: 1.5rem;
+      }
+      .tagline {
+        font-size: 1rem;
       }
     }
   </style>
@@ -254,9 +262,10 @@
     const noTexts = [
       "No 😳",
       "Are you sure? 🥺",
-      "Think again… 👀",
-      "Last chance!! 😤",
-      "You can’t escape this love 💘"
+      "Click again...", 
+      "Last chance lol", 
+      "You really won't say yes??", 
+      "Okay, universe is watching now"
     ];
 
     const cuteTaglines = [
@@ -264,7 +273,8 @@
       "I made this just for you, you know 🥺",
       "Rejecting me is illegal in 47 countries 💘",
       "Your heart is definitely saying yes rn 💗",
-      "Fine, but we both know you're melting 🧸"
+      "You’re making me bounce with hope 😁",
+      "Alright fine… but you know the answer already 💕"
     ];
 
     let noClickCount = 0;
@@ -291,16 +301,16 @@
     noBtn.addEventListener("click", () => {
       noClickCount++;
 
-      const textIndex = Math.min(noClickCount, noTexts.length - 1);
+      const textIndex = Math.min(noClickCount - 1, noTexts.length - 1);
       noBtn.textContent = noTexts[textIndex];
 
-      yesScale += 0.25;
+      yesScale += 0.2;
       yesBtn.style.transform = `scale(${yesScale})`;
 
-      const taglineIndex = (noClickCount - 1) % cuteTaglines.length;
+      const taglineIndex = noClickCount - 1;
       tagline.textContent = cuteTaglines[taglineIndex];
 
-      if (noClickCount >= 4) {
+      if (noClickCount >= 6) {
         mainBox.classList.add("full-yes");
         noBtn.style.display = "none";
         tagline.textContent = "The universe clearly wants you to click yes ✨";
